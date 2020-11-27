@@ -1,10 +1,11 @@
 import random
 import sys
 import constants
+import copy
 
 
-players_list = constants.PLAYERS
-teams_list = constants.TEAMS
+players_list = copy.deepcopy(constants.PLAYERS)
+teams_list = copy.deepcopy(constants.TEAMS)
 
 
 def display_start_menu():
@@ -56,7 +57,7 @@ def exit_app():
     """ Completes exit of application."""
 
     print("\nYou've opted to 'Exit' this application.\n")
-    print("Thanks for taking the time to check out this application. \n Have a great day, and I'll hope to see you around here again soon.")
+    print("Thanks for taking the time to check out this application. \nHave a great day, and I'll hope to see you around here again soon.")
     sys.exit()
 
 
@@ -106,7 +107,7 @@ def distribute_equally_players_by_experience(experienced_players_list_input, ine
     inexperienced_players = random.sample(inexperienced_players, len(inexperienced_players))
 
     experienced_players_per_team = int(len(experienced_players)/ len(teams_list_input))
-    inexperienced_players_per_team = len(inexperienced_players)/ len(teams_list_input)
+    inexperienced_players_per_team = int(len(inexperienced_players)/ len(teams_list_input))
     
     teams_and_player_list = [None] * len(teams_list_input)
 
@@ -114,9 +115,9 @@ def distribute_equally_players_by_experience(experienced_players_list_input, ine
     teams_and_player_list[1] = experienced_players[experienced_players_per_team:int(experienced_players_per_team * 2)]
     teams_and_player_list[2] = experienced_players[int(experienced_players_per_team * 2):]
     
-    teams_and_player_list[0].extend(inexperienced_players[:experienced_players_per_team])
-    teams_and_player_list[1].extend(inexperienced_players[experienced_players_per_team:int(experienced_players_per_team * 2)])
-    teams_and_player_list[2].extend(inexperienced_players[int(experienced_players_per_team * 2):])
+    teams_and_player_list[0].extend(inexperienced_players[:inexperienced_players_per_team])
+    teams_and_player_list[1].extend(inexperienced_players[experienced_players_per_team:int(inexperienced_players_per_team * 2)])
+    teams_and_player_list[2].extend(inexperienced_players[int(inexperienced_players_per_team * 2):])
     
     return teams_and_player_list
 
